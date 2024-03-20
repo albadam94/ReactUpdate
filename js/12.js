@@ -9,7 +9,7 @@ const tecnologias = ['HTML', 'CSS', 'JavaScript', 'React.js', 'Node.js', 'Nest.j
 //     console.log(tech)
 // })
 
-// map
+// map genera un nuevo arreglo
 const arrayMap = tecnologias.map(function(tech) {
     return tech
 })
