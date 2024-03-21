@@ -1,4 +1,6 @@
 // Fetch API con Promises
+//Obtiene datos a traves de la red 
+
 const url = 'https://jsonplaceholder.typicode.com/comments'
 
 fetch(url)
@@ -10,3 +12,6 @@ fetch(url)
     })
     .then(data => console.log(data))
     .catch(error => console.log(error.message))
+
+
+    
