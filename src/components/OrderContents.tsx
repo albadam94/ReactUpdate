@@ -1,12 +1,13 @@
-import {OrderItem} from "../types"
+import {OrderItem, MenuItem} from "../types"
 import { formatCurrency } from "../helpers"
 
 type OrderContentsProps ={
-    order: OrderItem[ ]
+    order: OrderItem[ ],
+    removeItem: (id:MenuItem['id'] )=> void
     
 }
 
-const OrderContents = ({order}:OrderContentsProps) => {
+const OrderContents = ({order,removeItem}:OrderContentsProps) => {
   return (
     <div>
     <h2 className="poppins-semibold text-3xl">Consumo</h2>
@@ -20,7 +21,9 @@ const OrderContents = ({order}:OrderContentsProps) => {
                 <p className="poppins-regular ">{item.name} - {formatCurrency(item.price)}</p>
                 <p className="poppins-bold font-black text-sm">cantidad:{item.quantity} - {formatCurrency (item.price * item.quantity)}</p>
                 </div>
-                <button className="bg-red-600 h-8 w-8 rounded-full text-white font-bold">
+                <button className="bg-red-600 h-8 w-8 rounded-full text-white font-bold"
+                onClick={()=>removeItem(item.id )}
+                >
                     x
                 </button>
             </div>
