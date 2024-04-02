@@ -45,7 +45,11 @@ function App() {
                 placeOrder={placeOrder}
                 />
           </div>
+      
       </main>
+      <footer className="bg-black py-3 items-center">
+            <p className=" text-center text-white mb-5 mt-10">Hecho en React con Tailwind CSS y Typescript</p>
+      </footer>
     </>
   )
 }
