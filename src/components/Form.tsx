@@ -1,4 +1,4 @@
-import {useState,ChangeEvent} from "react";
+import {useState,ChangeEvent, FormEvent} from "react";
 import { Activity } from "../types";
 import { categories } from "../data/categories";
 
@@ -11,15 +11,21 @@ export default function Form() {
   });
 
   const handleChange= (e:ChangeEvent<HTMLSelectElement>|ChangeEvent<HTMLInputElement>) =>{
-    const isNumberField=["category","calories"].includes(e.target.id);
-    
-    setActivity({...activity, [e.target.id]:isNumberField ? +e.target.value: e.target });
-    console.log(e.target.value);
+    setActivity({...activity,[e.target.id]: e.target.value});
   }
 
+  const isValidActivity = ( ) => {
+    const {name,calories} = activity;
+    return name.trim( ) !== " " && calories > 0;
+  }
+
+  const handleSubmit = ( e: FormEvent <HTMLFormElement>) => {
+    e.preventDefault();
+  }
   return (
     <form
     className="space-y-5 bg-white shadow p-10 rounded-lg"
+    onSubmit={handleSubmit }
     >
         <div className="grid grid-cols-1 gap-3">
             <label htmlFor="category" className="font-bold">Categoria:</label>
@@ -46,8 +52,9 @@ export default function Form() {
         </div>
         <input
         type="submit"
-        className="bg-gray-800 text-white font-bold py-2 rounded-lg w-full cursor-pointer"
-        value="Enviar"
+        className="bg-gray-800 text-white font-bold py-2 rounded-lg w-full cursor-pointer disabled:opacity-5"
+        value="Agregar Actividad"
+        disabled={!isValidActivity()}
         />
     </form>
   )
