@@ -1,11 +1,12 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import  { useState, ChangeEvent, FormEvent } from 'react';
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import { categories } from '../data/categories';
 import ErrorMessage from './ErrorMessage';
 import { DraftExpense, Value } from '../types';
+import { useBudget } from '../hooks/useBudget';
 
-const ExpenseForm: React.FC = () => {
+const ExpenseForm = () => {
     const [expense, setExpense] = useState<DraftExpense>({
         expenseName: '',
         amount: 0,
@@ -13,7 +14,9 @@ const ExpenseForm: React.FC = () => {
         date: new Date()
     });
 
+
     const [error, setError] = useState<string | null>(null);
+    const{ dispatch } = useBudget()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -48,8 +51,9 @@ const ExpenseForm: React.FC = () => {
             });
             setError(null);
         }
+        dispatch({type: 'add-expense', payload: {expense}})
     };
-
+    
     return (
         <form className="space-y-5 raleway" onSubmit={handleSubmit}>
             <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
