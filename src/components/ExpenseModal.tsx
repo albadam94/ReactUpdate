@@ -6,7 +6,7 @@ import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseModal() {
 
-    const { state, dispatch} = useBudget()
+    const { state, dispatch } = useBudget()
 
     return (
         <>
@@ -20,7 +20,7 @@ export default function ExpenseModal() {
             </div>
 
             <Transition appear show={state.modal} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => dispatch({type: 'closed-modal'})}>
+                <Dialog as="div" className="relative z-10" onClose={() => dispatch({type: 'close-modal'})}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
