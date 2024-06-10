@@ -38,8 +38,8 @@ export default function PatientForm() {
                         {...register('name',{
                             required:'El nombre del paciente es obligatorio',
                             maxLength:{
-                                value:8,
-                                message:'Maximo 8 caracteres'
+                                value:20,
+                                message:'Maximo 20 caracteres'
                             }
                         })}
                     />
