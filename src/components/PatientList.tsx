@@ -1,20 +1,19 @@
-import { usePatientStore } from "../store"
-import PatientDetails from "./PatientDetails"
+import { usePatientStore } from "../store";
+import PatientDetails from "./PatientDetails";
 
 export default function PatientsList() {
+    const patients = usePatientStore(state => state.patients);
 
-    const patients = usePatientStore((state) => state.patients)
-    
     return (
-        <div className="md:w-1/2 lg:3/5 md:h-screen overflow-y-scroll">
-            {patients.length ? (
+        <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
+            {patients.length > 1 ? (
                 <>
                     <h2 className="font-black text-3xl text-center">Listado de Pacientes</h2>
                     <p className="text-xl mt-5 mb-10 text-center">
                         Administra tus {''}
                         <span className="text-indigo-600 font-bold">Pacientes y Citas</span>
                     </p>
-                    {patients.map( patient => (
+                    {patients.map(patient => (
                         <PatientDetails
                             key={patient.id}
                             patient={patient}
@@ -31,5 +30,5 @@ export default function PatientsList() {
                 </>
             )}
         </div>
-    )
+    );
 }

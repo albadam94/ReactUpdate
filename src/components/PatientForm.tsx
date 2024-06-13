@@ -1,60 +1,58 @@
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import Error from './Error'
-import type { DraftPatient } from '../types'
-import { usePatientStore } from '../store'
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import Error from './Error';
+import type { DraftPatient } from '../types';
+import { usePatientStore } from '../store';
 
 export default function PatientForm() {
+    const addPatient = usePatientStore(state => state.addPatient);
+    const activeId = usePatientStore(state => state.activeId);
+    const patients = usePatientStore(state => state.patients);
+    const updatePatient = usePatientStore(state => state.updatePatient);
 
-    const addPatient= usePatientStore(state => state.addPatient)
-    const activeId=usePatientStore(state => state.activeId)
-    const patients=usePatientStore(state => state.patients)
-    const updatePatient = usePatientStore(state => state.updatePatient)
-
-    const { register, handleSubmit, setValue , formState: { errors}, reset} = useForm<DraftPatient>()
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<DraftPatient>();
 
     useEffect(() => {
-        if(activeId) {
-            const activePatient = patients.filter( patient => patient.id === activeId)[0]
-            setValue('name', activePatient.name)
-            setValue('caretaker', activePatient.caretaker)
-            setValue('date', activePatient.date)
-            setValue('email', activePatient.email)
-            setValue('symptoms', activePatient.symptoms)
+        if (activeId) {
+            const activePatient = patients.find(patient => patient.id === activeId);
+            if (activePatient) {
+                setValue('name', activePatient.name || '')
+                setValue('caretaker', activePatient.caretaker || '')
+                setValue('date', activePatient.date || '')
+                setValue('email', activePatient.email || '')
+                setValue('symptoms', activePatient.symptoms || '')
+            }
         }
-        
-    }, [activeId, patients, setValue])
+    }, [activeId, patients, setValue]);
 
     const registerPatient = (data: DraftPatient) => {
-        if(activeId) {
-            updatePatient(data)
+        if (activeId) {
+            updatePatient(data);
             toast('Paciente Actualizado Correctamente', {
                 type: 'success'
-            })
+            });
         } else {
-            addPatient(data)
-            toast.success('Paciente Registrado Correctamente')
+            addPatient(data);
+            toast.success('Paciente Registrado Correctamente');
         }
-        reset()
-    }
+        reset();
+    };
 
-
-  
     return (
-      <div className="md:w-1/2 lg:w-2/5 mx-5">
-          <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
-  
-          <p className="text-lg mt-5 text-center mb-10">
-              Añade Pacientes y {''}
-              <span className="text-indigo-600 font-bold">Administralos</span>
-          </p>
+        <div className="md:w-1/2 lg:w-2/5 mx-5">
+            <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
 
-          <form 
-              className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
-              noValidate
-              onSubmit={handleSubmit(registerPatient)}
-          >
+            <p className="text-lg mt-5 text-center mb-10">
+                Añade Pacientes y {''}
+                <span className="text-indigo-600 font-bold">Administralos</span>
+            </p>
+
+            <form
+                className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+                noValidate
+                onSubmit={handleSubmit(registerPatient)}
+            >
                 <div className="mb-5">
                     <label htmlFor="name" className="text-sm uppercase font-bold">
                         Paciente 
