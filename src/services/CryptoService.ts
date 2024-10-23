@@ -8,5 +8,9 @@ export async function getCryptos(){
     if(result.success){
         return result.data
     }
-    console.log(result)
+    
+}
+
+export async function fetchCurrentCryptoPrice(pair: Pair) {
+    console.log (pair)
 }
